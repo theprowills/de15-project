@@ -1,8 +1,46 @@
 from modules.book import Book
 from modules.magazine import Magazine
+from modules.cd import Cd
+from modules.dvd import Dvd
+from modules.catalog import Catalog
+import json
 
-book = Book("Book1", 123, "Programming", 123, "Budi", 123)
-print(book.title)
+f = open("files\data.json")
+data_json = json.load(f)
 
-magazine = Magazine("majalah kompas", 124, "keuangan", 1, 1)
-print(magazine.title)
+list_book = []
+list_magazine = []
+list_dvd = []
+list_cd = []
+
+for item in data_json:
+    if item['source'] == 'book':
+        list_book.append(
+            Book(
+                title=item['title'],
+                subject=item['subject'],
+                upc=item['upc'],
+                isbn=item['issbn'],
+                authors=item['authors'],
+                dds_number=item['dds_number']
+            )
+        )
+    elif item['source'] == 'magazine':
+        list_magazine.append(
+            Magazine(
+                title=item['title'],
+                subject=item['subject'],
+                upc=item['upc'],
+                volume=item['volume'],
+                issue=item['issue']
+            )
+        )
+    
+catalog_all = [list_book, list_magazine, list_dvd, list_cd]
+
+input_search = "media_cnn"
+results = Catalog(catalog_all).search(input_search)
+
+print('=====| results |======')
+for index, result in enumerate(results):
+    print({f'result ke-{index+1} | {result}'})
