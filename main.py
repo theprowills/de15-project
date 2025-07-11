@@ -35,6 +35,26 @@ for item in data_json:
                 issue=item['issue']
             )
         )
+    elif item['source'] == 'cd':
+        list_cd.append(
+            Cd(
+                title=item['title'],
+                subject=item['subject'],
+                upc=item['upc'],
+                artist=item['artist']
+            )
+        )
+    elif item['source'] == 'dvd':
+        list_dvd.append(
+            Dvd(
+                title=item['title'],
+                subject=item['subject'],
+                upc=item['upc'],
+                actors=item['actors'],
+                directors=item['directors'],
+                genre=item['genre']
+            )
+        )
     
 catalog_all = [list_book, list_magazine, list_dvd, list_cd]
 
